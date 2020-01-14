@@ -24,12 +24,12 @@ version: 1.0.0
 
 # About/contact
 author:
-  name: Codinfox
-  description: A passionate <strong>developer and researcher</strong>, learning to be a giant.
+  name: milkyway
+  description: 개발자가 되고 싶은 복수전공생. explore anything without hesitating
   gravatar: 3c2986ad7ac1f2230ea3596f44563328 # md5 hash of your email address
   contact:
     linkedin:  https://www.linkedin.com/in/lizhihao
-    github:    https://github.com/codinfox
+    github:    https://github.com/milkyway103
     # facebook:  <hide>
     twitter:   https://twitter.com/Li_Zhihao
     weibo:     http://weibo.com/41173780
