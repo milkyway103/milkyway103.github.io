@@ -37,7 +37,7 @@ nav:
   Home:
     - '/blog/'
   Categories:
-    - '/'
+    - '/blog/categories/'
     - { TIL : '/blog/categories/#til' }
     - { python : '/blog/categories/#python' }
     - { javascript : '/blog/categories/#javascript' }
