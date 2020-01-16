@@ -52,9 +52,9 @@ nav:
 tag_page: '/blog/tags/'
 category_page: '/blog/categories/'
 
-hero:
-  image: /public/img/we_will_be_giants_by_yalestewart.jpg
-  caption: Original Artwork &copy; <a href="http://yalestewart.deviantart.com/art/We-Will-Be-Giants-370176475">Yale Stewart</a>
+milkyway:
+  image: /public/img/milkyway_image.png
+  caption: Explore anything without hesitating
 
 # Puglins
 mathjax: true # whether support mathjax
