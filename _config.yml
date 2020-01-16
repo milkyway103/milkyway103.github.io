@@ -45,6 +45,7 @@ nav:
     - { algorithm : '/blog/categories/#algorithm' }
     - { Review : '/blog/categories/#review' }
     - { etc : '/blog/categories/#etc' }
+    - { Tags: '/blog/tags/' }
   About:
     - '/about/'
 
