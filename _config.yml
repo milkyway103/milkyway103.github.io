@@ -44,6 +44,7 @@ nav:
     - { django : '/blog/categories/#django' }
     - { algorithm : '/blog/categories/#algorithm' }
     - { Review : '/blog/categories/#review' }
+    - { daybyday : '/blog/categories/#daybyday' }
     - { etc : '/blog/categories/#etc' }
     - { Tags: '/blog/tags/' }
   About:
