@@ -32,7 +32,9 @@ TEMPLATES = [
 이 폴더 (MyFirstDjango) 내의 templates 경로를 읽어올 수 있게 해 준다.
 
 그리고 templates 폴더 내에 `base.html`을 만들고 아래와 같이 부트스트랩의 기본 템플릿을 가져와준다.
+
 ```html
+{% raw %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -55,12 +57,14 @@ TEMPLATES = [
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>
+{% endraw %}
 ```
 
 내부에 만들어놓은 `block`을 통해 이 base.html을 재사용하는 것이 가능해진다.
 main.html을 아래와 같이 바꾸고 base.html을 `extends` 하게 되면
 
 ```html
+{% raw %}
 {% extends 'base.html' %}
 
 {% block content %}
@@ -72,6 +76,7 @@ main.html을 아래와 같이 바꾸고 base.html을 `extends` 하게 되면
 <a href='{% url "lovely:second" %}'>second</a>
 <a href='{% url "lovely:third" %}'>third</a>
 {% endblock %}
+{% endraw %}
 ```
 
 ![img](/assets/post-img/django/destroydjango07-img02.png)
@@ -95,10 +100,12 @@ h1 {
     font-size: 50px;
 }
 ```
-
+{% raw %}
 이를 사용하기 위해서는 `base.html`의 가장 하단에 `{% load static %}`라고 쓰고, 이 스타일 시트를 불러와 주면 된다.
+{% endraw %}
 
 ```html
+{% raw %}
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -123,6 +130,7 @@ h1 {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>
+{% endraw %}
 ```
 
 그리고 main 페이지를 들어가보면
