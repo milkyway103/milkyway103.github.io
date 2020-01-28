@@ -34,7 +34,12 @@ admin.site.register(Post)
 -	. : 같은 경로를 의미
 -	-> `.models` : 같은 경로의 models에서
 
-![](./images/admin-page-image1.png)
+<center>
+ <figure>
+ <img src="/assets/post-img/admin-page-image1.png" alt="views">
+ <figcaption></figcaption>
+ </figure>
+ </center>
 
 #### 관리자 페이지 커스터마이징
 
@@ -61,9 +66,21 @@ class PostAdmin(admin.ModelAdmin):
 
 -	`list_display` : tuple 형태로 관리자 페이지에서 보여주고 싶은 컬럼을 설정. 보통 콤마 단위로 줄바꿈해서 코딩
 
-![](./images/admin-page-image2.png) - `search_fields` : tuple 형태로 검색 가능하도록 하는 컬럼을 설정. 반드시 마지막에 콤마를 써야 한다.
+<center>
+ <figure>
+ <img src="/assets/post-img/admin-page-image2.png" alt="views">
+ <figcaption></figcaption>
+ </figure>
+ </center>
+- `search_fields` : tuple 형태로 검색 가능하도록 하는 컬럼을 설정. 반드시 마지막에 콤마를 써야 한다.
 
-![](./images/admin-page-image3.png) - `list_filter` : Admin 사이트에 필터를 활성화할 항목을 설정하는 옵션
+<center>
+ <figure>
+ <img src="/assets/post-img/admin-page-image3.png" alt="views">
+ <figcaption></figcaption>
+ </figure>
+ </center>
+- `list_filter` : Admin 사이트에 필터를 활성화할 항목을 설정하는 옵션
 
 > **Date range filter 옵션** DateField를 list_filter 옵션에 추가하면 기본적으로 제공되는 필터링 옵션은 다음 4가지 항목 : Today, Past 7 days, This month, This year
 >
@@ -107,9 +124,19 @@ class PostAdmin(admin.ModelAdmin):
 -	`list_display_links` : 목록 내에서 링크로 지정할 필드 목록 (이를 지정하지 않으면, 첫번째 필드에만 링크가 적용)
 -	CRUD 가능
 
-![](./images/admin-page-image4.png)
+<center>
+ <figure>
+ <img src="/assets/post-img/admin-page-image4.png" alt="views">
+ <figcaption></figcaption>
+ </figure>
+ </center>
 
-![](./images/admin-page-image5.png)
+<center>
+ <figure>
+ <img src="/assets/post-img/admin-page-image5.png" alt="views">
+ <figcaption></figcaption>
+ </figure>
+ </center>
 
 ### References
 
