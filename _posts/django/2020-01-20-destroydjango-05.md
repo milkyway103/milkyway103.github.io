@@ -77,4 +77,4 @@ urlpatterns = [
 - 아무 경로도 없을 때 posts > views > main 함수로 가라!
 - 그럼 main 함수에서는 `posts/main.html`을 렌더링한 결과를 뿌려준다.
 
-![](./images/rendering-html.png)
+![](/_assets/post-img/rendering-html.png)

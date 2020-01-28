@@ -25,7 +25,7 @@ urlpatterns = [
 ```
 
 위의 경로들은 `기본주소/lovely/first` 와 같은 형태로 접근 가능하다.
-이 때 프로젝트의 기본 `urls.py`에 해당 앱의 경로를 **include** 해준다.
+이 때 프로젝트의 기본 `urls.py`에 해당 앱의 경로를 `include` 해준다.
 
 ```python
 from django.contrib import admin
@@ -43,16 +43,8 @@ urlpatterns = [
 `lovely/first` 와 같은 형식으로 경로를 지정해줄 수 있지만, 이 경우 유지보수성이 떨어지게 된다.
 코드를 보다 간결하고 가독성 있게 하기 위해 lovely 앱의 `urls.py`에서 지정해준 `app_name` 과 템플릿 언어를 사용하여 다음과 같이 적을 수 있다.
 
-```HTML
-<h1>
-    Hello, Django!
-</h1>
+![](/_assets/post-img/destroydjango06-image3.png)
 
-<a href='{% url "lovely:first" %}'>first</a>
-<a href='{% url "lovely:second" %}'>second</a>
-<a href='{% url "lovely:third" %}'>third</a>
-```
+![](/_assets/post-img/destroydjango06-image1.png)
 
-![](./images/destroydjango06-image1.png)
-
-![](./images/destroydjango06-image2.png)
+![](/_assets/post-img/destroydjango06-image2.png)
