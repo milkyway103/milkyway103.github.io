@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 초보자를 위한 장고 뿌시기 6 링크 타고 다른 페이지 넘어가기
+title: 초보자를 위한 장고 뿌시기 7 html에 스타일 적용하기
 categories : django
 tags : django python
 comments : true
