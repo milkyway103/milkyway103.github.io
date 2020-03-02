@@ -146,3 +146,95 @@ for (const a of iter2) log(a);
 - 'map.entries()' -> key와 value를 함께 출력
 - MapIterator 역시 Symbol.iterator를 가지고 있음.
 - 즉 keys, values, entries 메서드는 이 Symbol.iterator가 또다시 반환하는 이터레이터를 가지고 순환한다.
+
+## 사용자 정의 이터러블, 이터러블/이터레이터 프로토콜 정의
+
+```JavaScript
+  const iterable = { // for문으로 호출했을 때 value로 3, 2, 1을 리턴해주고 끝나는 사용자 정의 이터러블 구현
+    [Symbol.iterator]() { // Symbol.iterator 메서드를 구현하고 있어야
+      let i = 3;
+      return { // 이터레이터를 반환
+        next() { // 이터레이터는 next를 메서드로 가지고 있음
+          return i == 0 ? { done: true} { value: i--, done: false } // next는 value와 done을 가지고 있는 객체를 리턴
+        }
+      }
+    }
+  };
+  let iterator = iterable[Symbor.iterator]();
+  // log(iterator.next()); // next를 통해 조회 가능
+  // log(iterator.next());
+  // log(iterator.next());
+  // log(iterator.next());
+  for (const a of iterable) log(a); // for..of를 통해 순회 가능
+```
+<center>
+ <figure>
+ <img src="/assets/post-img/javascript/jsfunctional2-image4.png" alt="views">
+ <figcaption>사용자 정의 이터러블에서 next()의 출력</figcaption>
+ </figure>
+ </center>
+ <center>
+  <figure>
+  <img src="/assets/post-img/javascript/jsfunctional2-image5.png" alt="views">
+  <figcaption>사용자 정의 이터러블에서 for...of의 출력</figcaption>
+  </figure>
+  </center>
+- iterable에 Symbor.iterator가 구현되어 있기 때문에 for..of 문에 들어갈 수 있음
+- 이터레이터 객체를 반환
+- 내부적으로 next()를 실행하면서 value를 담게 됨
+- 아직은 자바스크립트 이터레이터 이터러블의 모든 속성을 구현하지는 못했음.
+
+```JavaScript
+  const arr2 = [1, 2, 3];
+  let arr2[Symbol.iterator]();
+  iter2.next(); // 일부 진행했을 때 진행한 이후의 값으로만 순회가 가능
+  for (const a of arr2) log(a);
+
+```
+- 잘 구현된 이터러블은 이터레이터를 만들었을 때 진행 도중 순회를 할 수도 있고, 이 이터레이터를 그대로 for .. of문에 넣었을 때 그대로 모든 값을 순회할 수 있도록 되어 있음.
+- 위의 iter2 역시 Symbol.iterator를 가지고 있음
+- 그리고 그를 실행한 결과는 자기 자신
+```javascript
+log(iter2[Symbol.iterator]() == iter2); // true
+```
+- 이렇게 이터레이터가 자기 자신을 반환하는 Symborl.iterator를 가지고 있을 때 well-formed iterable, well-formed iterator라고 할 수 있다.
+
+```JavaScript
+  const iterable = { // for문으로 호출했을 때 value로 3, 2, 1을 리턴해주고 끝나는 사용자 정의 이터러블 구현
+    [Symbol.iterator]() { // Symbol.iterator 메서드를 구현하고 있어야
+      let i = 3;
+      return { // 이터레이터를 반환
+        next() { // 이터레이터는 next를 메서드로 가지고 있음
+          return i == 0 ? { done: true} { value: i--, done: false }; // next는 value와 done을 가지고 있는 객체를 리턴
+        },
+        [Symbol.iterator]() { return this; }
+      }
+    }
+  };
+```
+- 이 사용자 정의 이터러블이 well-formed iterator를 반환할 수 있도록 하기 위하여, 자기 자신이 이터레이터이면서 Symbor.iterator()를 리턴했을 때 자기 자신을 반환하도록 하여 다시 한 번 for문에 들어간다거나 할 때 이전까지 진행되었던 자기 자신을 기억하여 그곳으로부터 다시 for문이 진행될 수 있도록 한다.
+- 이미 많은 오픈소스 라이브러리들이나 자바스크립트에서 순회 가능한 형태의 값을 가진 객체들은 대부분 이 iterable/iterator 프로토콜을 따르기 시작하였음.
+- 페이스북에서 만든 immutable js 역시 이 프로토콜을 따른다.
+- 자바스크립트가 사용되고 있는 환경인 브라우저들의 Web API... 돔과 같은 곳에서도 이 프로토콜을 따르고 있다.
+
+```html
+<script>
+  log(document.querySelectorAll('*')); // 엘리먼트들을 조회한 상태에서
+  for (const a of document.querySelectorAll('*')) log(a); // 와 같은 식으로 순회가 가능
+  log(all); // 이 값이 배열이어가 아니라,
+  log(all[Symbol.iterator]()) // 가 구현되어 있으며 이터레이터를 리턴하기 때문
+</script>
+```
+
+## 전개 연산자
+- 마찬가지로 이터레이터/이터러블 프로토콜을 따른다.
+```JavaScript
+const a = [1, 2];
+log([...a, ...[3, 4]]); // [1, 2, 3, 4]로 하나의 array가 됨
+```
+- 전개연산자 역시 이터러블 프로토콜을 따르고 있는 값들을 펼칠 수 있음
+```javascript
+log([...a, ...arr, ...set, ...map.keys()])
+```
+- 여러 가지를 섞을 수도 있음.
+- 이터러블을 정확히 익히고, 이터러블에서 사용된 추상을 정확히 아는 것이 중요.
