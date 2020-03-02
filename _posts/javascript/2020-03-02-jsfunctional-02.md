@@ -234,7 +234,9 @@ log([...a, ...[3, 4]]); // [1, 2, 3, 4]로 하나의 array가 됨
 ```
 - 전개연산자 역시 이터러블 프로토콜을 따르고 있는 값들을 펼칠 수 있음
 ```javascript
-log([...a, ...arr, ...set, ...map.keys()])
+log([...a, ...arr, ...set, ...map.keys()]);
 ```
 - 여러 가지를 섞을 수도 있음.
 - 이터러블을 정확히 익히고, 이터러블에서 사용된 추상을 정확히 아는 것이 중요.
+
+> [강의참고자료](https://github.com/indongyoo/functional-javascript-01)
