@@ -154,20 +154,200 @@ var a = [0, 1, 2]
 
 ## range와 느긋한 L.range 테스트
 
+```javascript
+function test(name, time, f) {
+    console.time(name);
+    while (time--) f();
+    console.timeEnd(name);
+}
+
+test('range', 10, () => reduce(add, range(1000000)));
+test('L.range', 10, () => reduce(add, L.range(1000000)));
+```
+
+그렇게까지 드라마틱한 차이는 나지 않지만 `L.range`가 `range`에 비해 좀더 효율적이라는 점을 알 수 있다.
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image6.png" alt="views">
+   <figcaption>test 결과</figcaption>
+   </figure>
+</center>
+
 ## take
 
-## 제너레이터/이터레이터 프로토콜로 구현하는 지연 평가
+이터레이터를 순회하는 또다른 함수 take
+
+```javascript
+const take = curry((l, iter) => { // limit, iterable
+    let res = [];
+    for (const a of iter) {
+        res.push(a);
+        if(res.length == l) return res;
+    }
+    return res;
+});
+```
+이터러블 프로토콜을 따른다.
+이터러블 안의 값을 `next`를 통해 순회하고 꺼내서 push만 하는 단순한 로직을 가지고 있다.
+
+```javascript
+log(take(5, range(100))); // [0, 1, 2, 3, 4]
+log(take(5, L.range(100))); // [0, 1, 2, 3, 4]
+```
+
+L.range같이 `지연성`을 가지는 값을 이터레이터로 만들게 되면 전혀 다른 함수가 이터레이터 프로토콜만 따를 때, 얼마든지 조합이 가능하다. 자바스크립트 고유의 프로토콜을 통해서 가능해지는 것이기 때문에 조합성이 높고, 잘 구현할 수 있다. 효율성적인 측면에서도 마찬가지로 훨씬 낫다.
+
+```javascript
+console.time('');
+log(take(5, range(100000)));
+console.timeEnd('');
+
+console.time('');
+log(take(5, L.range(100000)));
+console.timeEnd('');
+```
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image7.png" alt="views">
+   <figcaption>효율성의 차이</figcaption>
+   </figure>
+</center>
+
+이러한 효율성의 차이가 발생하는 이유는, `range` 같은 경우에는 100000 크기의 array를 만들고 5개를 뽑지만, `L.range`는 5개만 만들고 뽑기 때문이다.
+이를 활용하면 다음과 같은 것도 가능하다.
+
+```javascript
+log(take(5, L.range(Infinity)));
+```
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image8.png" alt="views">
+   <figcaption>beyond the infinity</figcaption>
+   </figure>
+</center>
+
+무한수열로 표현하게 되더라도 어차피 5개의 값만 만들기 때문에 똑같은 시간이 소요된다.
+하지만 `range` 안에 무한수열을 넣게 되면 브라우저가 뻗는다.
+
+다음과 같은 작업에서도 `L.range`가 더 효율적이다.
+
+```javascript
+console.time('');
+go(
+    range(10000),
+    take(5),
+    reduce(add),
+    log
+);
+console.timeEnd('');
+
+console.time('');
+go(
+    L.range(10000),
+    take(5),
+    reduce(add),
+    log
+);
+console.timeEnd('');
+```
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image9.png" alt="views">
+   <figcaption></figcaption>
+   </figure>
+</center>
+
+`L.range`의 지연성은 `take`나 `reduce`와 같은 함수를 만날 때 연산이 시작되게 된다. 제너레이터로 이터레이터를 리턴하는 함수를 실행했을 때에는 해당하는 연산이 안에서 이루어지지 않는다. `reduce`와 같이 배열 안의 첫번째 값과 두번째 값을 꺼내서 연산을 필요로 하는 함수나 몇 개의 길이를 가지는지 모르는 어레이에서 두 개의 결과만 뽑는 것과 같은 함수에서, `최대한 연산을 미루다가 그 때 연산을 처음 하는 기법`인 것이다.
+
+## 이터러블 중심 프로그래밍에서의 지연 평가 (Lazy Evaluation)
+= 제때 계산법, 느긋한 계산법
+제너레이터/이터레이터 프로토콜을 기반으로 구현된다.
+
+지연 평가는 게으른 평가라고도 이야기하지만 영리하다는 뜻이 함께 들어 있다.
+즉, 그냥 게으르기만 한 것이 아니라 최대한 게으르면서도 가장 영리하게 평가한다는 뜻이다.
+
+제때 계산법이라고도 부르는 이유는 이 지연 평가가 가장 필요할 때까지 평가를 미루다가 가장 필요할 때 해당하는 코드들을 평가하면서 값들을 만들어나가는 기법이기 때문이다. `L.range` 함수에서 봤던 것처럼 큰 크기의 배열을 미리 만들어 놓는 것이 아니라 그 이후에 필요한 연산이었던 reduce를 하면서 add를 한다고 할 때, 즉 필요한 값을 뽑을 때만 그 값을 만들어내면서 값을 만드는 것을 최소화하고 연산을 좀더 효율적으로 줄이는 아이디어이다.
+
+그러나 이전의 자바스크립트에서는 이러한 구현이 어려웠다. 엄밀히 말하면, 구현 자체는 가능했지만 공식적인 구현이라고 보기에는 어려웠다. 언어 자체에서 해당하는 로직을 구현할 수 있도록 기반이 되는 프로토콜이 있지 않았기 때문이다.
+
+그러므로 지연 평가를 위한 별개의 연산이 많이 추가되어야 했다. 이것이 큰 연산은 아니지만, 공식적인 자바스크립트의 값이나 프로토콜이 아니었기 때문에 서로 다른 라이브러리나 함수에서 함께 사용되기는 어려웠다.
+
+그러나 ES6에서는 `이터러블/이터레이터 프로토콜`로 인해 지연성으로 코드의 평가를 미루고 코드를 값으로 다루는 프로그래밍을 할 때 보다 공식적인 자바스크립트의 일반 값으로써 구현할 수 있게 되었다. 나아가 서로 다른 라이브러리나 함수들이 안전한 조합성, 합성성 등에서 향상되었다.
+
+그래서 이 강의에서는 제너레이터 기반으로 이터러블 중심 프로그래밍에서의 지연 평가를 구현할 것이다. (= 리스트 중심 프로그래밍, 컬렉션 중심 프로그래밍) 이터러블 중심 프로그래밍이란 map, filter, reduce, take 같은 함수들을 기반으로 프로그래밍하는 것을 말한다.
+
+정리하자면, 이터터블 중심 프로그래밍을 할 때 어떻게 `지연성`을 구현할 수 있고 어떻게 지연성에 대해 보다 공식적인 값으로서 `조합성`을 만들어갈 수 있는지에 대해 알아볼 것이다.
 
 ## L.map
 
+앞서 만들었던 map을 지연성을 가진 `L.map`으로 만들되 제너레이터/이터레이터 프로토콜을 통해 구현할 것이다.
+
+좀더 구체적으로 표현하면 `L.map`은
+1. 제너레이터 함수
+2. 이터레이터를 반환
+3. 이 반환되는 이터레이터는 평가를 미루는 성질을 가지고 평가 순서를 달리 조작할 수 있는 준비가 되어 있음 (지연성)
+
+```javascript
+L.map = function *(f, iter) {
+    for (const a of iter) yield f(a);
+};
+
+var it = L.map(a => a + 10 , [1, 2, 3]);
+log(it.next());
+log(it.next());
+log(it.next());
+```
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image10.png" alt="views">
+   <figcaption>L.map</figcaption>
+   </figure>
+</center>
+
+next()를 통해 평가하는 만큼의 값만 얻어올 수 있다.
+
+해당하는 이터레이터를 전개 연산자를 사용하여 평가할 수도 있다.
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image11.png" alt="views">
+   <figcaption>[...it]</figcaption>
+   </figure>
+</center>
+
+`L.map` 자체에서는 새로운 array를 만들지도 않고 값 하나하나마다 순회하면서 yield를 통해 함수가 적용된 값을 next를 통해 하나씩 전달하게 된다. 지연성을 가지는 이터레이터 객체를 내가 원하는 방법으로 평가할 수 있게 되는 것이다.
+`it.next().value`와 같이 평가할 수도 있다.
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image12.png" alt="views">
+   <figcaption>it.next().value</figcaption>
+   </figure>
+</center>
+
 ## L.filter
 
-## range, map, filter, take, reduce 중첩 사용
+```javascript
+L.filter = function *(f, iter) {
+    for (const a of iter) if (f(a)) yield a;
+};
 
-## L.range, L.map, L.filter, take의 평가 순서
+var it = L.filter(a => a % 2, [1, 2, 3, 4]);
+log(it.next());
+log(it.next());
+log(it.next());
+```
 
-## 엄격한 계산과 느긋한 계산의 효율성 비교
+`yield`가 총 네 번 되는 것이 아니라 원하는 상황에서만 yield된다.
+next를 여러 번 했을 때 `done: true`가 되기 전까지, 해당하는 값을 필터링하여 next했을 때 value가 꺼내지도록 구성하였다.
 
-## map, filter 계열 함수들이 가지는 결합 법칙
-
-## ES6의 기본 규약을 통해 구현하는 지연 평가의 장점
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional7-image13.png" alt="views">
+   <figcaption>L.filter</figcaption>
+   </figure>
+</center>
