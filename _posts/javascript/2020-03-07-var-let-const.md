@@ -1,7 +1,8 @@
 ---
 layout: post
 title: var, let, const
-categories : javascript var let const ES6
+categories : javascript
+tags : javascript var let const ES6
 comments : true
 ---
 
