@@ -241,7 +241,7 @@ const find = (f, iter) => go(
 
 <center>
    <figure>
-   <img src="/assets/post-img/javascript/jsfunctional-image12.png" alt="views">
+   <img src="/assets/post-img/javascript/jsfunctional10-image12.png" alt="views">
    <figcaption></figcaption>
    </figure>
 </center>
@@ -263,7 +263,7 @@ log(find(u => u.age < 30, users));
 
 <center>
    <figure>
-   <img src="/assets/post-img/javascript/jsfunctional-image13.png" alt="views">
+   <img src="/assets/post-img/javascript/jsfunctional10-image13.png" alt="views">
    <figcaption></figcaption>
    </figure>
 </center>
@@ -272,7 +272,7 @@ log(find(u => u.age < 30, users));
 
 <center>
    <figure>
-   <img src="/assets/post-img/javascript/jsfunctional-image14.png" alt="views">
+   <img src="/assets/post-img/javascript/jsfunctional10-image14.png" alt="views">
    <figcaption></figcaption>
    </figure>
 </center>
@@ -281,7 +281,7 @@ log(find(u => u.age < 30, users));
 
 <center>
    <figure>
-   <img src="/assets/post-img/javascript/jsfunctional-image15.png" alt="views">
+   <img src="/assets/post-img/javascript/jsfunctional10-image15.png" alt="views">
    <figcaption></figcaption>
    </figure>
 </center>
@@ -300,7 +300,7 @@ const find = (f, iter) => go(
 
 <center>
    <figure>
-   <img src="/assets/post-img/javascript/jsfunctional-image16.png" alt="views">
+   <img src="/assets/post-img/javascript/jsfunctional10-image16.png" alt="views">
    <figcaption></figcaption>
    </figure>
 </center>
@@ -336,7 +336,84 @@ go(
 
 <center>
    <figure>
-   <img src="/assets/post-img/javascript/jsfunctional-image17.png" alt="views">
+   <img src="/assets/post-img/javascript/jsfunctional10-image17.png" alt="views">
    <figcaption>결과값</figcaption>
    </figure>
 </center>
+
+## L.map, L.filter로 map과 filter 만들기
+
+```javascript
+log(map(a => a + 10, range(4)));
+```
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional10-image18.png" alt="views">
+   <figcaption></figcaption>
+   </figure>
+</center>
+
+위의 `range`를 `L.range`로 바꾸어도 동작한다.
+`map`의 `Symbol.iterator`를 통해서 이터러블 객체를 이터레이터로 만들어 사용하고 있기 때문이다.
+
+```javascript
+const map = curry((f, iter) => go(
+    iter,
+    L.map(f)
+));
+```
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional10-image19.png" alt="views">
+   <figcaption></figcaption>
+   </figure>
+</center>
+
+앞으로 평가할 준비가 되어 있는 지연된 값이 된다.
+
+```javascript
+const map = curry((f, iter) => go(
+    iter,
+    L.map(f),
+    take(Infinity)
+));
+```
+
+앞에서 만들어지는 `map`이 length와 관계없이 모두 결과값을 만들게 된다.
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional10-image20.png" alt="views">
+   <figcaption></figcaption>
+   </figure>
+</center>
+
+`pipe`를 통해 더 간결하게 만들 수도 있다.
+
+```javascript
+const map = curry(pipe(L.map, take(Infinity)));
+```
+
+`filter`도 같은 방식으로 가능하다.
+
+```javascript
+const filter = curry(pipe(L.filter, take(Infinity)));
+
+log(filter(a => a % 2, range(4)));
+```
+
+<center>
+   <figure>
+   <img src="/assets/post-img/javascript/jsfunctional10-image21.png" alt="views">
+   <figcaption></figcaption>
+   </figure>
+</center>
+
+여기서 `take(Infinity)`라는 같은 코드를 사용하기 때문에, 다음과 같이 축약할 수 있다.
+
+```javascript
+const map = curry(pipe(L.map, takeAll));
+const filter = curry(pipe(L.filter, takeAll));
+```
