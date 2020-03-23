@@ -13,6 +13,7 @@ comments : true
 ### error log
 
 ```
+{% raw %}
 Environment:
 
 
@@ -128,14 +129,14 @@ l10n
 log
 static
 tz
-
+{% endraw %}
 ```
 
 -> staticfiles가 등록된 tag library에 없다...즉 잘못된 문법 사용
 
 ### 해결 방법
 
-```html
+```python
 {% raw %}
 {% load staticfiles %}
 {% endraw %}
@@ -143,7 +144,7 @@ tz
 
 가 아니라
 
-```html
+```python
 {% raw %}
 {% load static %}
 {% endraw %}
