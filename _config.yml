@@ -9,7 +9,6 @@ logo: '/public/img/milkyway_logo.png'
 # Site configurations
 gems:
   - jekyll-paginate
-  - jekyll-feed
 markdown: kramdown
 kramdown:
   input: GFM
