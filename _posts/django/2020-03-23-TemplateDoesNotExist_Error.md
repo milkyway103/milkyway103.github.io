@@ -70,6 +70,8 @@ Exception Value: home/main.html
 
 ```
 
+-> 지정한 경로에 해당 template 파일이 존재하지 않는다! 경로를 잘못 지정해 주었거나 하는 문제일 것이라고 생각했다.
+
 ### 문제 원인
 
 `settings.py` 파일의 `INSTALLED_APPS` 부분에 app이 추가되어 있지 않아서 app을 인식하지 못해서, 당연히 app 하위에 있는 templates 폴더도 인식하지 못한 것이었다.
