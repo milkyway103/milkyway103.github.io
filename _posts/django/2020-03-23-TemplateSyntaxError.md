@@ -135,7 +135,7 @@ tz
 
 ### 해결 방법
 
-```python
+```html
 {% raw %}
 {% load staticfiles %}
 {% endraw %}
@@ -143,7 +143,7 @@ tz
 
 가 아니라
 
-```python
+```html
 {% raw %}
 {% load static %}
 {% endraw %}
