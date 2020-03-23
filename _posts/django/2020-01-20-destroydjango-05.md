@@ -31,37 +31,46 @@ urlpatterns`에 `list` 형태로 경로들이 들어 있다.
 **실습!**
 
 1. `urls.py`의 urlpatterns에 path를 추가해준다!
+
 ```python
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', 어떤-곳으로?),
 ]
 ```
+
 2. posts 폴더의 `views.py`에서 `main`이라는 함수를 정의해준다.
+
 ```python
 from django.shortcuts import render
 
 def main(request):
     return render(request, 어떤 html을 띄워줄건지 <- html 경로)
 ```
+
 - render : html을 response로 뿌려줄 때 사용하는 함수
 3. posts 폴더에 templates > posts 폴더를 생성하고, 그 안에 `main.html` 파일을 생성한다.
 - 왜 templates 안에 app 이름과 똑같은 posts 폴더를 만들까?
 -> render 함수가 html 등의 파일을 가져올 때 templates 폴더에서 가져온다.
 만약 다른 앱(폴더)에 똑같은 이름의 다른 html이 있다면 의도치 않은 html을 가져올 가능성을 방지하기 위해서!
 - html의 이름을 `main.html`로 한 까닭은 함수의 이름이 main이기 때문에 알아보기 쉽도록!
+
 ```HTML
 <h1>
     Hello, Django!
 </h1>
 ```
+
 4. main 함수의 render를 html 경로로 바꾸어 준다.
+
 ```python
 def main(request):
     # request에 대해 posts/main.html을 render해줘!
     return render(request, 'posts/main.html')
 ```
+
 5. urls.py의 경로를 main 함수로 바꾸어 준다.
+
 ```python
 from django.contrib import admin
 from django.urls import path
@@ -73,6 +82,7 @@ urlpatterns = [
     # -> 아무 경로도 없을 때 posts > views > main 함수로 가라!
 ]
 ```
+
 - 콤마 반드시!
 - 아무 경로도 없을 때 posts > views > main 함수로 가라!
 - 그럼 main 함수에서는 `posts/main.html`을 렌더링한 결과를 뿌려준다.
