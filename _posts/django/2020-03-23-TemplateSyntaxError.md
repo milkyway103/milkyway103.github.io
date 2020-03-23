@@ -166,4 +166,4 @@ load staticfiles는 이전 버전의 Django에서 사용되었으나, 2016년 �
 - [공식 Django 문서](https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#static)
 - [Static 파일](http://pythonstudy.xyz/python/article/314-Static-%ED%8C%8C%EC%9D%BC) <-이 링크는 이전 버전의 Django를 다루고 있다. `load staticfiles`는 더 이상 동작하지 않는다.
 - [Django Static 파일](https://velog.io/@ground4ekd/django-static)
-- [What is the difference between {% load staticfiles %} and {% load static %}](https://stackoverflow.com/questions/24238496/what-is-the-difference-between-load-staticfiles-and-load-static)
+- [What is the difference between load staticfiles and load static](https://stackoverflow.com/questions/24238496/what-is-the-difference-between-load-staticfiles-and-load-static)
