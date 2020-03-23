@@ -135,14 +135,18 @@ tz
 
 ### 해결 방법
 
-```
+```python
+{% raw %}
 {% load staticfiles %}
+{% endraw %}
 ```
 
 가 아니라
 
-```
+```python
+{% raw %}
 {% load static %}
+{% endraw %}
 ```
 
 라고 적어야 한다.
