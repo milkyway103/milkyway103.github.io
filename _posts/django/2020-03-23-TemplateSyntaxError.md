@@ -2,7 +2,7 @@
 layout: post
 title: TemplateSyntaxError
 categories : django
-tags : django python TemplateSyntaxError bugreport
+tags : django python bugreport
 comments : true
 ---
 
@@ -135,13 +135,13 @@ tz
 
 ### 해결 방법
 
-```python
+```
 {% load staticfiles %}
 ```
 
 가 아니라
 
-```python
+```
 {% load static %}
 ```
 
