@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 카펫 - 프로그래머스 레벨 2
+title: 네트워크 - 프로그래머스 레벨 2
 categories : algorithm
-tags : java programmers BP
+tags : java programmers DFS
 comments : true
 ---
 
