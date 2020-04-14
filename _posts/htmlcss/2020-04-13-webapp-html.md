@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 웹앱 과정 - HTML
-categories : etc
+categories : html&css
 tags : HTML5
 comments : true
 ---
