@@ -45,6 +45,7 @@ nav:
     - { html&css : '/blog/categories/#html&css' }
     - { django : '/blog/categories/#django' }
     - { algorithm : '/blog/categories/#algorithm' }
+    - { database : '/blog/categories/#database' }
     - { Review : '/blog/categories/#review' }
     - { daybyday : '/blog/categories/#daybyday' }
     - { etc : '/blog/categories/#etc' }
