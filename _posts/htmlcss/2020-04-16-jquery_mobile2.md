@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 웹앱 과정 - 제이쿼리 모바일 (2)
-categories : html&css
+categories : htmlcss
 tags : jQuerymobile
 comments : true
 ---

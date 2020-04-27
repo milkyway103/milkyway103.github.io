@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 웹앱 과정 - 모바일 웹
-categories : html&css
+categories : htmlcss
 tags : viewport
 comments : true
 ---
