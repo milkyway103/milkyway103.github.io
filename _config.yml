@@ -42,7 +42,7 @@ nav:
     - { python : '/blog/categories/#python' }
     - { java : '/blog/categories/#java' }
     - { javascript : '/blog/categories/#javascript' }
-    - { html&css : '/blog/categories/#html&css' }
+    - { html&css : '/blog/categories/#htmlcss' }
     - { django : '/blog/categories/#django' }
     - { algorithm : '/blog/categories/#algorithm' }
     - { database : '/blog/categories/#database' }
