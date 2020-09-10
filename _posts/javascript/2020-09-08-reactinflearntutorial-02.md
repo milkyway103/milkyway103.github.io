@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title: <누구든지 하는 리액트: 초심자를 위한 react 핵심 강좌> 2. 프론트엔드 라이브러리란 무엇인가?
+title: <누구든지 하는 리액트: 초심자를 위한 react 핵심 강좌> 3. 리액트의 Virtual Dom
 categories : javascript
 tags : javascript react library
 
