@@ -8,7 +8,6 @@ tags : javascript react library
 comments : true
 ---
 
-# 리액트는 무엇인가 - 프론트엔드 라이브러리란 무엇인가?
 > 인프런 강의 <누구든지 하는 리액트: 초심자를 위한 react 핵심 강좌> by velopert
 
 - Javascript : 동적 화면 구성이 가능하도록 함
