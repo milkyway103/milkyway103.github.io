@@ -27,7 +27,7 @@ log(
 - 위의 코드는 함수가 중첩되어 있다 보니 읽기에 불편하다.
 
 ```JavaScript
-const go = () => { };
+const go = (...args) => reduce((a, f) => f(a), args);
 
 go(
     0,
